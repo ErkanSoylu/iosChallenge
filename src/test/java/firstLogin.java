@@ -1,92 +1,85 @@
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.net.URL;
 public class firstLogin {
-     private MobileDriver driver;
+    public static final String UserName = "blupay_hU5pQe";
+    public static final String AutomateKey = "MmyJq8RwiXxyXm8aLJVr";
+
+    public static final String URL = "https://" + UserName + ":" + AutomateKey + "@hub-cloud.browserstack.com/wd/hub";
+     public IOSDriver driver;
+   public IOSDriver<MobileElement> driverpublic;
 
     @BeforeTest
     public void setUp() throws Exception {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "iOS");
-        desiredCapabilities.setCapability("deviceName", "iPhone Simulator");
+        desiredCapabilities.setCapability("deviceName", "iPhone 14 Pro Max");
+        desiredCapabilities.setCapability("os_version","16");
         desiredCapabilities.setCapability("appPackage", "com.bluepay.roket");
         desiredCapabilities.setCapability("appActivity", "com.bluepay.roket.MainActivity");
+        desiredCapabilities.setCapability("app","bs://c48dba17daa525c27455e32685aa475a4091739e");
+        desiredCapabilities.setCapability("autoAcceptAlerts", true);
+        IOSDriver driver = new IOSDriver(new URL(URL),desiredCapabilities);
 
-        driver = (MobileDriver) new RemoteWebDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-    }
 
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
-    }
+        MobileElement loginButton = (MobileElement) driver.findElement(By.name("com.bluepay.roket:id/user_login_Button"));
 
-    @Test
-    public void testLogin() {
-        class LoginPage {
-            private WebDriver driver;
-            private String loginButtonId = "com.bluepay.roket:id/user_login_Button";
-            private String loginActionButtonId = "com.bluepay.roket:id/login_action_Button";
+        // Check that the login button exists
+        Assert.assertTrue(loginButton.isDisplayed());
 
-            public LoginPage(WebDriver driver) {
-                this.driver = driver;
-            }
-
-            public void clickLoginButton() {
-                driver.findElement(By.id(loginButtonId)).click();
-            }
-
-            public void clickLoginActionButton() {
-                driver.findElement(By.id(loginActionButtonId)).click();
-            }
-        }
-
-        class HomePage {
-            private WebDriver driver;
-            private String loginButtonId = "com.bluepay.roket:id/user_login_Button";
-
-            public HomePage(WebDriver driver) {
-                this.driver = driver;
-            }
-
-            public String getLoginButtonText() {
-                WebElement loginButton = driver.findElement(By.id(loginButtonId));
-                return loginButton.getText();
-            }
-        }
-
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-
-        // Check the User Login Button exists
-        Assert.assertTrue(driver.getPageSource().contains(loginPage.loginButtonId));
-
-        // Check the text inside the User Login Button
-        WebElement loginButton = driver.findElement(By.id(loginPage.loginButtonId));
+        // Check the text inside the login button
         Assert.assertEquals(loginButton.getText(), "Giriş Yap");
 
-        // Call the Click Action of The Login Button
-        loginPage.clickLoginButton();
+        // Call the click action of the login button
+        loginButton.click();
+        Thread.sleep(2000);
+        // Find the login action button
+        MobileElement loginActionButton = (MobileElement) driver.findElement(By.name("com.bluepay.roket:id/login_action_Button"));
 
-        // Check the Following login screen will appear
-        Assert.assertTrue(driver.getPageSource().contains(loginPage.loginActionButtonId));
+        // Check that the login action button exists
+        Assert.assertTrue(loginActionButton.isDisplayed());
+        Thread.sleep(2000);
+        // Call the click action of the login action button
+        loginActionButton.click();
+        Thread.sleep(2000);
+        // Check that the login button text is changed to the welcome message
+        MobileElement welcomeButton = (MobileElement) driver.findElement(By.name("com.bluepay.roket:id/user_login_Button"));
 
-        // Call the Click action of the login action button
-        loginPage.clickLoginActionButton();
+        // Check that the login button exists
+        Assert.assertTrue(welcomeButton.isDisplayed());
+        Assert.assertEquals(welcomeButton.getText(), "Merhaba, Çağrı");
 
-        // Check if the app returns to home screen and User Login Button text is changed to welcome user message
-        Assert.assertEquals(homePage.getLoginButtonText(), "Merhaba,Çağrı");
+        driver.quit();
+
+    }
+
+    class LoginScreen {
+        public WebElement loginActionButton;
+
+        public boolean isDisplayed() {
+            // Check if the login screen is displayed by checking for the presence of the login action button
+            return loginActionButton.isDisplayed();
+        }
+    }
+    // Page object for the home screen
+    class HomeScreen {
+        public WebElement loginButton;
+
+        public boolean isDisplayed() {
+            // Check if the home screen is displayed by checking for the presence of the login button
+            return loginButton.isDisplayed();
+        }
     }
 }

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="020ffce1-cafb-4b66-992a-7effe0eb75db" name="Changes" comment="">
+    <list default="true" id="020ffce1-cafb-4b66-992a-7effe0eb75db" name="Changes" comment="added testngxml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/firstLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/firstLogin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +55,7 @@
       <recent name="C:\Users\e00596907\IdeaProjects\iosChallenge\src\test\java" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.firstLogin.setUp">
+  <component name="RunManager" selected="TestNG.Unnamed">
     <configuration name="Unnamed" type="TestNG" nameIsGenerated="true">
       <module name="iosChallenge" />
       <shortenClasspath name="NONE" />
@@ -122,6 +122,18 @@
       <option name="presentableId" value="Default" />
       <updated>1672557867396</updated>
     </task>
+    <task id="LOCAL-00001" summary="added testngxml">
+      <created>1672561289845</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1672561289845</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added testngxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="added testngxml" />
   </component>
 </project>
